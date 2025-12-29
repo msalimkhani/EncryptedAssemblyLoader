@@ -16,21 +16,21 @@ namespace EncryptedAssemblyLoader.Implementation
         {
             _aes = Aes.Create();
         }
-        public TInterface SetIV(string iv)
+        public virtual TInterface SetIV(string iv)
         {
             this._ivString = iv;
 
             return (TInterface)(IBaseInterface<TInterface>)this;
         }
 
-        public TInterface SetKey(string key, int size)
+        public virtual TInterface SetKey(string key, int size)
         {
             this._keyString = key;
             this._keySize = size;
             return (TInterface)(IBaseInterface<TInterface>)this;
         }
 
-        public TInterface SetPassword(string password)
+        public virtual TInterface SetPassword(string password)
         {
             byte[] key;
             using var sha = SHA256.Create();

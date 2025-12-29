@@ -84,5 +84,23 @@ namespace EncryptedAssemblyLoader.Implementation
 
             return this;
         }
+
+        public override IAssemblyLoader SetPassword(string password)
+        {
+            assemblyDecryptor.SetPassword(password);
+            return this;
+        }
+
+        public override IAssemblyLoader SetIV(string iv)
+        {
+            assemblyDecryptor.SetIV(iv);
+            return this;
+        }
+
+        public override IAssemblyLoader SetKey(string key, int size)
+        {
+            assemblyDecryptor.SetKey(key, size);
+            return this;
+        }
     }
 }
