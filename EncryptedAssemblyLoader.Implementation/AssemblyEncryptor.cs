@@ -5,34 +5,12 @@ using System.Text;
 
 namespace EncryptedAssemblyLoader.Implementation
 {
-    public class AssemblyEncryptor : IAssemblyEncryptor
+    public class AssemblyEncryptor : BaseClass<IAssemblyEncryptor, AssemblyEncryptor>, IAssemblyEncryptor
     {
-
-        private Aes _aes;
-        private string? _ivString;
-        private string _keyString = null!;
-        private int _keySize;
         public string? DllFilePath { get; set; }
         public byte[]? AssemblyData { get; set; }
         public Assembly? Assembly { get; set; }
         public Stream? AssemblyStream { get; set; }
-
-        public AssemblyEncryptor()
-        {
-            this._aes = Aes.Create();
-        }
-
-        private byte[]? GetAssemblyBytes(Assembly assembly)
-        {
-            string path = assembly.Location;
-
-            if (string.IsNullOrEmpty(path))
-            {
-                return null;
-            }
-
-            return File.ReadAllBytes(path);
-        }
 
         public void Dispose()
         {
@@ -40,7 +18,7 @@ namespace EncryptedAssemblyLoader.Implementation
             _aes.Dispose();
         }
 
-        public Stream Encrypt(Stream outputStream)
+        public TStream Encrypt<TStream>(TStream outputStream) where TStream : Stream
         {
 
             if (this.DllFilePath is not null)
@@ -86,32 +64,6 @@ namespace EncryptedAssemblyLoader.Implementation
             }
 
             return outputStream;
-        }
-
-        public IAssemblyEncryptor SetIV(string iv)
-        {
-            this._ivString = iv;
-
-            return this;
-        }
-
-        public IAssemblyEncryptor SetKey(string key, int size)
-        {
-            this._keyString = key;
-            this._keySize = size;
-            return this;
-        }
-
-        public IAssemblyEncryptor SetPassword(string password)
-        {
-            byte[] key;
-            using var sha = SHA256.Create();
-            key = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-            var keyString = Convert.ToBase64String(key);
-            this._keyString = keyString;
-            this._keySize = 256;
-
-            return this;
         }
     }
 }

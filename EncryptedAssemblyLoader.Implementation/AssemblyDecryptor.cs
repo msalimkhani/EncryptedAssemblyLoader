@@ -4,26 +4,17 @@ using System.Text;
 
 namespace EncryptedAssemblyLoader.Implementation
 {
-    public class AssemblyDecryptor : IAssemblyDecryptor
+    public class AssemblyDecryptor : BaseClass<IAssemblyDecryptor, AssemblyDecryptor>, IAssemblyDecryptor
     {
-        private Aes _aes;
-        private string? _ivString;
-        private string _keyString = null!;
-        private int _keySize;
-
-        public AssemblyDecryptor()
-        {
-            this._aes = Aes.Create();
-        }
 
         public string? EncryptedDllFilePath { get; set; }
         public byte[]? EncryptedAssemblyData { get; set; }
         public Stream? EncryptedAssemblyStream { get; set; }
 
-        public Stream Decrypt(Stream outputStream)
+        public TStream Decrypt<TStream>(TStream outputStream) where TStream : Stream
         {
 
-            byte[] assemblyData = null;
+            byte[] assemblyData = null!;
 
             if(this.EncryptedDllFilePath is not null)
             {
@@ -67,30 +58,10 @@ namespace EncryptedAssemblyLoader.Implementation
             return outputStream;
         }
 
-        public IAssemblyDecryptor SetIV(string iv)
+        public void Dispose()
         {
-            this._ivString = iv;
-
-            return this;
-        }
-
-        public IAssemblyDecryptor SetKey(string key, int size)
-        {
-            this._keyString = key;
-            this._keySize = size;
-            return this;
-        }
-
-        public IAssemblyDecryptor SetPassword(string password)
-        {
-            byte[] key;
-            using var sha = SHA256.Create();
-            key = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-            var keyString = Convert.ToBase64String(key);
-            this._keyString = keyString;
-            this._keySize = 256;
-
-            return this;
+            GC.SuppressFinalize(this);
+            this._aes.Dispose();
         }
     }
 }

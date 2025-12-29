@@ -2,7 +2,7 @@
 
 namespace EncryptedAssemblyLoader.Interfaces
 {
-    public interface IAssemblyEncryptor : IDisposable
+    public interface IAssemblyEncryptor : IDisposable, IBaseInterface<IAssemblyEncryptor>
     {
         string? DllFilePath { get; set; }
 
@@ -12,12 +12,6 @@ namespace EncryptedAssemblyLoader.Interfaces
 
         Stream? AssemblyStream { get; set; }
 
-        IAssemblyEncryptor SetPassword(string password);
-
-        IAssemblyEncryptor SetKey(string key, int size);
-
-        IAssemblyEncryptor SetIV(string iv);
-
-        Stream Encrypt(Stream outputStream);
+        TStream Encrypt<TStream>(TStream outputStream) where TStream : Stream;
     }
 }
