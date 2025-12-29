@@ -10,6 +10,7 @@ namespace EncryptedAssemblyLoader.DependencyInjection
         {
             services.AddScoped<IAssemblyDecryptor, AssemblyDecryptor>();
             services.AddScoped<IAssemblyEncryptor, AssemblyEncryptor>();
+            services.AddScoped<IAssemblyLoader, AssemblyLoader>();
             return services;
         }
 
@@ -17,6 +18,7 @@ namespace EncryptedAssemblyLoader.DependencyInjection
         {
             services.AddTransient<IAssemblyDecryptor, AssemblyDecryptor>();
             services.AddTransient<IAssemblyEncryptor, AssemblyEncryptor>();
+            services.AddTransient<IAssemblyLoader, AssemblyLoader>();
             return services;
         }
 
@@ -24,6 +26,7 @@ namespace EncryptedAssemblyLoader.DependencyInjection
         {
             services.AddSingleton<IAssemblyDecryptor, AssemblyDecryptor>();
             services.AddSingleton<IAssemblyEncryptor, AssemblyEncryptor>();
+            services.AddSingleton<IAssemblyLoader, AssemblyLoader>();
             return services;
         }
     }
