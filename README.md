@@ -48,12 +48,16 @@ public class GeneratedProxy : EncryptedClass, ILocalInterface
 }
 ```
 
-🤝 Contributions
-Contributions are welcome! If you have ideas for improving the security or the proxy generation logic:
+---
+
+
+## 🤝 Contributions
+
+### Contributions are welcome! If you have ideas for improving the security or the proxy generation logic:
 
 - 1. Fork the repository.
 - 2. Create your feature branch.
 - 3. Submit a Pull Request.
 
-📝 License
-This project is licensed under the MIT License.
+## 📝 License
+This project is licensed under the BSD-2-Clause License.
