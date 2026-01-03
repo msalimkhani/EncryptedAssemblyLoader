@@ -11,5 +11,12 @@ namespace EncryptedAssemblyLoader.Interfaces
         IAssemblyLoader SetEncryptedAssemblyData(byte[] data);
 
         Assembly? Load();
+
+        Type GetType(string name);
+
+        T? GetClassType<T>(
+            string name,
+            IServiceProvider? serviceProvider = null,
+            params object[] parameters);
     }
 }
